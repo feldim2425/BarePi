@@ -9,3 +9,6 @@
 !/.clang-format
 !/barepi.ld
 !/CMakeLists.txt
+
+!/doc/
+!/scripts/

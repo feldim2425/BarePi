@@ -7,4 +7,4 @@ The SDK should allow programmers to make fast real time applications that don't 
 
 It should also be made compatible with C++ even dough the SDK itself will be written mostly in C and Assembly.
 
-For debugging capability the Develoer should be able to choose between the raspberries onboard serial interface and qemu debugging. The exact details and extra features are not fully worked out yet.
+For debugging capability the Developer should be able to choose between the raspberries onboard serial interface and qemu debugging. The exact details and extra features are not fully worked out yet.
