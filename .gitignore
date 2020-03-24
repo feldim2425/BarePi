@@ -1,0 +1,7 @@
+/*
+!.gitignore
+!/includes/
+!/src/
+!/.clang-format
+!/barepi.ld
+!/CMakeLists.txt
