@@ -1,10 +1,10 @@
 
-list(
-    APPEND
+set(
     SOURCES
+    "start.S"
     "start.c"
-    "semihost.c"
+    #"semihost.c"
 )
 
-add_library(BarePI STATIC ${SOURCES})
+add_library(BarePI OBJECT ${SOURCES})
 target_include_directories(BarePI PUBLIC "../includes")

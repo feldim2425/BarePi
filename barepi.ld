@@ -2,17 +2,13 @@
  * BarePi Linker Script
  */
 
-ENTRY(_start);
-
 SECTIONS {
 
-    .init : {
-        *(.init)
-    }
-
+    . = 0x80000;
     .text : {
         /* Combine all program (text) segments into the .text section */
-        *(.text*) 
+        *(.text.boot)
+        *(.text)
     }
 
     /* This is apperently used for pre initialization constructors (C++) and functions (C) but I didn't find much info about the actual usage
@@ -32,8 +28,7 @@ SECTIONS {
     .init_array : {
         . = ALIGN(4);
         __init_array_start = .;
-        SORT(*(.init_array*))
-        *(.init_array)
+        *(.init_array*)
         __init_array_end = .;
     }
 
@@ -41,15 +36,19 @@ SECTIONS {
     .fini_array : {
         . = ALIGN(4);
         __fini_array_start = .;
-        *(.fini_array)
-        SORT(*(.fini_array*))
+        *(.fini_array*)
         __fini_array_end = .;
     }
 
     /* not sure it .ctors and .dtors is required or .init_array and .fini_array replaces that. Many sources suggest it isn't needet anymore */
 
-    .ARM.exidx : {
-        . = ALIGN(4);
+    .ARM.extab : ALIGN(4)  
+    {  
+       *(.ARM.extab*)  
+    }  
+
+    .ARM.exidx : ALIGN(4)
+    {
         __exidx_start = .;
         *(.ARM.exidx*)
         __exidx_end = .;
@@ -75,9 +74,11 @@ SECTIONS {
     .bss : {
         . = ALIGN(4);
         __bss_start = .;
+        PROVIDE(__bss_start__ = .);
         *(.bss*)
         *(COMMON)
         __bss_end = .;
+        PROVIDE(__bss_end__ = .);
     }
     
     _end = .;
