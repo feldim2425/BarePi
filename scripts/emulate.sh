@@ -4,6 +4,7 @@ VERSION=1
 PORT=-1
 DEBUGGING=0
 SEMIHOST=0
+BINFILE=""
 
 set_port() {
 	if [ $1 -le 0 ]; then 
@@ -15,6 +16,8 @@ set_port() {
 
 usage() {
 	cat <<-EOF
+	Usage: $0 [<options>] <binary>
+
 	-h              Shows this help message
 	-d              Opens a gdb debugging interface
 	-p <port>       Sets the port of the debugging interface (Requires -d)      
@@ -34,6 +37,16 @@ do
 		h|?) usage ;; 
 	esac
 done
+
+shift $((OPTIND-1))
+BINFILE="$@"
+
+if [ -z $BINFILE ]; then
+	usage
+elif [ ! -f $BINFILE ]; then
+	echo "The binary file does not exist!"
+	exit 1
+fi
 
 if [ $DEBUGGING -eq 0 ] && [ $PORT -gt 0 ]; then
 	echo "Warning! Setting the debug port with \"-p\" requires \"-d\". Option will be ignored"
@@ -68,6 +81,6 @@ echo ""
 echo "Starting ARM QEMU!"
 
 
-qemu-system-arm $QEMU_ARGS -M raspi2 -bios ./build/src/kernel.img
+qemu-system-arm $QEMU_ARGS -M raspi2 -bios $BINFILE
 
 
