@@ -13,10 +13,6 @@ extern "C" {
 #define AARCH 32
 #endif
 
-#ifndef APROFILE
-#define APROFILE 'A'
-#endif
-
 #if AARCH == 32
 typedef uint32_t uword_t;
 #define MAX_UWORD_VALUE 4294967295UL

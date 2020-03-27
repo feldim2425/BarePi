@@ -9,7 +9,7 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
     semihost_value_t result;
 #if ARM_SEMIH_ENABLE == 1
 #if AARCH == 32
-#if APROFILE == 'M'
+#ifdef __thumb__
     asm volatile("mov r0, %1\n"
                  "mov r1, %2\n"
                  "hlt 0x3C\n"
