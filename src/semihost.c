@@ -1,8 +1,8 @@
 
 #include <semihost.h>
 
-const char const SEMIHOST_STDIO_FILE[] = ":ff";
-const char const SEMIHOST_FEATURE_FILE[] = ":semihosting-features";
+const char SEMIHOST_STDIO_FILE[] = ":ff";
+const char SEMIHOST_FEATURE_FILE[] = ":semihosting-features";
 
 semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
 {
@@ -28,7 +28,7 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
                  : "r"(op), "r"(val)
                  : "r0", "r1");
 #endif // ARMPROFILE
-#else // AARCH
+#else  // AARCH
     asm volatile("mov w0, %1\n"
                  "mov x1, %2\n"
                  "hlt 0xF000\n"
@@ -40,7 +40,7 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
     // W0 actually maps to the lower 16-Bit of X0, but just to be safe it's
     // added the the cobbled registers
 #endif // AARCH
-#else 
+#else
     result = 0;
 #endif // ARM_SEMIH_ENABLE
     return result;

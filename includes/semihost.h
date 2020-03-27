@@ -107,12 +107,12 @@ extern "C"
      * Opening this file with SEMIMODE_WRITE opens stdout \n
      * If the stdout_stderr extention is supported (bit: 1 / byte:0) the file can be opend with SEMIMODE_APPEND to get stderr
      */
-    extern const char const SEMIHOST_STDIO_FILE[];
+    extern const char SEMIHOST_STDIO_FILE[];
     /**
      * This constant contains a string (0-terminated char array) that represents feature file
      * in the SEMISYS_OPEN call
      */
-    extern const char const SEMIHOST_FEATURE_FILE[];
+    extern const char SEMIHOST_FEATURE_FILE[];
 
     /**
      * Call a semihost syscall function. \n
