@@ -2,6 +2,7 @@
  * BarePi Linker Script
  */
 
+ENTRY(_start);
 
 SECTIONS {
 
