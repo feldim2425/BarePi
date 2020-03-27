@@ -81,6 +81,8 @@ echo ""
 echo "Starting ARM QEMU!"
 
 
-qemu-system-arm $QEMU_ARGS -M raspi2 -bios $BINFILE
+QEMU_START_CMD="qemu-system-arm $QEMU_ARGS -M raspi2 -bios $BINFILE"
+echo "$QEMU_START_CMD"
+$($QEMU_START_CMD)
 
 
