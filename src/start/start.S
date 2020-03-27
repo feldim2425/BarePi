@@ -29,7 +29,12 @@ bss_init_loop:
 	b bss_init_loop
 
 bss_init_end:
-	b	_sysinit
+	// Calls _sysinit since r0,r1,r2 are preserved in the upper code they are given as parameters
+	// these 3 registers are setup by the raspberry firmware:
+	// r0 (1. arg) = zero ... seems to be unused
+	// r1 (2. arg) = machine id. Please refer to the armstubs for more info https://github.com/raspberrypi/tools/tree/master/armstubs
+	// r2 (3. arg) = atags
+	bl	_sysinit
 
 halt:
 	wfe
