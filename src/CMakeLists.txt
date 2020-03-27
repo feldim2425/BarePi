@@ -3,7 +3,7 @@ set(
     SOURCES
     "start.S"
     "start.c"
-    #"semihost.c"
+    "semihost.c"
 )
 
 add_library(BarePI OBJECT ${SOURCES})

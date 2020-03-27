@@ -10,6 +10,10 @@ extern "C"
 #include <stdint.h>
 #include <stdlib.h>
 
+#ifndef ARM_SEMIH_ENABLE
+#define ARM_SEMIH_ENABLE 1
+#endif
+
 #include "archdef.h"
 
     enum semihost_magic_enum

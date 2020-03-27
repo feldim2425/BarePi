@@ -7,7 +7,18 @@ const char const SEMIHOST_FEATURE_FILE[] = ":semihosting-features";
 semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
 {
     semihost_value_t result;
+#if ARM_SEMIH_ENABLE == 1
 #if AARCH == 32
+#if APROFILE == 'M'
+    asm volatile("mov r0, %1\n"
+                 "mov r1, %2\n"
+                 "hlt 0x3C\n"
+                 "mov %0, r0\n"
+
+                 : "=r"(result)
+                 : "r"(op), "r"(val)
+                 : "r0", "r1");
+#else
     asm volatile("mov r0, %1\n"
                  "mov r1, %2\n"
                  "hlt 0xF000\n"
@@ -16,7 +27,8 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
                  : "=r"(result)
                  : "r"(op), "r"(val)
                  : "r0", "r1");
-#else
+#endif // ARMPROFILE
+#else // AARCH
     asm volatile("mov w0, %1\n"
                  "mov x1, %2\n"
                  "hlt 0xF000\n"
@@ -27,12 +39,16 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
                  : "x0", "x1", "w0");
     // W0 actually maps to the lower 16-Bit of X0, but just to be safe it's
     // added the the cobbled registers
-#endif
+#endif // AARCH
+#else 
+    result = 0;
+#endif // ARM_SEMIH_ENABLE
     return result;
 }
 
 int8_t semihost_check_featurebit(uint8_t featrueBit, int featureByte)
 {
+#if ARM_SEMIH_ENABLE == 1
     char magicArr[] = {0, 0, 0, 0};
     char buffer;
     semihost_value_t param[] = {(semihost_value_t)SEMIHOST_FEATURE_FILE, SEMIMODE_READ,
@@ -55,8 +71,8 @@ int8_t semihost_check_featurebit(uint8_t featrueBit, int featureByte)
     param[0] = fd;
     param[1] = (semihost_value_t)magicArr;
     param[2] = 4;
-    if (semihost_syscall(SEMISYS_READ, (semihost_value_t)param) != 0 || magicArr[0] != SEMIFB_MAGIC_0 || magicArr[1] != SEMIFB_MAGIC_1 ||
-        magicArr[2] != SEMIFB_MAGIC_2 || magicArr[3] != SEMIFB_MAGIC_3)
+    if (semihost_syscall(SEMISYS_READ, (semihost_value_t)param) != 0 || magicArr[0] != SEMIFB_MAGIC_0 ||
+        magicArr[1] != SEMIFB_MAGIC_1 || magicArr[2] != SEMIFB_MAGIC_2 || magicArr[3] != SEMIFB_MAGIC_3)
     {
         result = -1;
     }
@@ -101,10 +117,14 @@ int8_t semihost_check_featurebit(uint8_t featrueBit, int featureByte)
 
     semihost_syscall(SEMISYS_CLOSE, (semihost_value_t)&fd);
     return result;
+#else
+    return -1;
+#endif
 }
 
 void semihost_exit(int32_t exc, int32_t subc)
 {
+#if ARM_SEMIH_ENABLE == 1
     semihost_value_t param[] = {exc, subc};
 
     if (semihost_check_featurebit(0, 0) == 0)
@@ -115,4 +135,5 @@ void semihost_exit(int32_t exc, int32_t subc)
     {
         semihost_syscall(SEMISYS_EXIT, (semihost_value_t)param);
     }
+#endif
 }
