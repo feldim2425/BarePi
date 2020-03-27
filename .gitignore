@@ -5,6 +5,7 @@
 !/includes/
 !/src/
 !/test/
+!/linker/
 !/cmake/
 
 !/.clang-format
