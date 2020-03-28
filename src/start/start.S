@@ -3,8 +3,10 @@
 .global _start
 
 _start:
+	// Get current processor id
 	mrc p15, 0, r5, c0, c0, 5
 	and r5, r5, #3
+	// If Id is not 0 keep the processor in an infinite loop. Basically shut them down
 	cmp r5, #0
 	bne halt
 
@@ -36,9 +38,8 @@ bss_init_end:
 	// r2 = atags
 	mov r0, r1
 	mov r1, r2
-
 	bl	_sysinit
 
 halt:
-	wfe
+	wfi
 	b halt

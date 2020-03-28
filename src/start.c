@@ -19,7 +19,7 @@ void exit(int exitcode)
     //asm volatile("dsb");
     semihost_exit(ADP_Stopped_ApplicationExit, exitcode);
     while (1)
-        ;
+        asm volatile("wfi");
 }
 
 void _sysinit(uword_t machineId, uword_t atags)
@@ -27,14 +27,10 @@ void _sysinit(uword_t machineId, uword_t atags)
     initf_t *it;
 
     for (it = &__preinit_array_start; it < &__preinit_array_end; ++it)
-    {
         (**it)();
-    }
 
     for (it = &__init_array_start; it < &__init_array_end; ++it)
-    {
         (**it)();
-    }
 
     exit(main());
 }
