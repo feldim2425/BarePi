@@ -22,7 +22,7 @@ void exit(int exitcode)
         ;
 }
 
-void _sysinit(uword_t zero, uword_t machineId, uword_t atags)
+void _sysinit(uword_t machineId, uword_t atags)
 {
     initf_t *it;
 
