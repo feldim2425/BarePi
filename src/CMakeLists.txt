@@ -3,6 +3,7 @@ set(
     SOURCE
     "start.c"
     "semihost.c"
+    "multicore.c"
 )
 
 if(ARM_TOOLCHAIN_BITNESS EQUAL 64)
