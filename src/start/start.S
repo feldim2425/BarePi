@@ -8,7 +8,7 @@ _start:
 	and r5, r5, #3
 	// If Id is not 0 keep the processor in an infinite loop. Basically shut them down
 	cmp r5, #0
-	bne halt
+	blne _sysinit2
 
 	// Load the _start address into the stack pointer. It will grow down from _start to 0
 	ldr r4, =_start

@@ -7,10 +7,12 @@ extern "C" {
 
 #include <stdint.h>
 
+#ifndef AARCH
 #ifdef __aarch64__
 #define AARCH 64
 #else
 #define AARCH 32
+#endif
 #endif
 
 #if AARCH == 32

@@ -34,3 +34,9 @@ void _sysinit(uword_t machineId, uword_t atags)
 
     exit(main());
 }
+
+void _sysinit2()
+{
+    while (1)
+        asm volatile("wfi");
+}

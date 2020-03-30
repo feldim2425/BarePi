@@ -29,16 +29,14 @@ semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
                  : "r0", "r1");
 #endif // ARMPROFILE
 #else  // AARCH
-    asm volatile("mov w0, %1\n"
+    asm volatile("mov x0, %1\n"
                  "mov x1, %2\n"
                  "hlt 0xF000\n"
                  "mov %0, x0\n"
 
                  : "=r"(result)
                  : "r"(op), "r"(val)
-                 : "x0", "x1", "w0");
-    // W0 actually maps to the lower 16-Bit of X0, but just to be safe it's
-    // added the the cobbled registers
+                 : "x0", "x1");
 #endif // AARCH
 #else
     result = 0;
@@ -63,7 +61,7 @@ int8_t semihost_check_featurebit(uint8_t featrueBit, int featureByte)
     }
 
     fd = semihost_syscall(SEMISYS_OPEN, (semihost_value_t)&param);
-    if (fd == -1)
+    if (fd == -1 || fd == 0)
     {
         return -1;
     }
