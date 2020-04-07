@@ -1,6 +1,9 @@
 
 set(
-    SOURCE
+SOURCES
+    "console/console.c"
+    "console/semiconsole.c"
+
     "start.c"
     "semihost.c"
     "multicore.c"
