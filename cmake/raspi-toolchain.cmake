@@ -61,11 +61,13 @@ else()
 endif()
 
 if(ARM_TOOLCHAIN_BITNESS EQUAL 64)
-    set(ARM_TOOLCHAIN_FLAGS "${ARM64_PLATFORM_FLAGS} -g -ffreestanding -nostdlib -nostartfiles")
+    set(ARM_TOOLCHAIN_FLAGS "${ARM64_PLATFORM_FLAGS} -g -ffreestanding -nostartfiles")
     add_compile_definitions(AARCH=64)
 else()
-    set(ARM_TOOLCHAIN_FLAGS "${ARM_PLATFORM_FLAGS} -g -marm -ffreestanding -nostdlib -nostartfiles")
+    set(ARM_TOOLCHAIN_FLAGS "${ARM_PLATFORM_FLAGS} -g -marm -ffreestanding -nostartfiles")
 endif()
+
+add_compile_definitions(PIBOARD=${RASPI_VERSION})
 
 set(CMAKE_C_FLAGS "${ARM_TOOLCHAIN_FLAGS}")
 set(CMAKE_CXX_FLAGS "${ARM_TOOLCHAIN_FLAGS}")
