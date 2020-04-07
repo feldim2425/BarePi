@@ -61,10 +61,10 @@ if [ $DEBUGGING -ne 0 ]; then
 	echo "Debugging: ENABLED"
 	if [ $PORT -gt 0 ]; then
 		echo "Debugging port set to $PORT"
-		QEMU_ARGS="$QEMU_ARGS -gdb tcp::$PORT"
+		QEMU_ARGS="$QEMU_ARGS -gdb tcp::$PORT -S"
 	else
 		echo "Debugging port defaults to 1234"
-		QEMU_ARGS="$QEMU_ARGS -s"
+		QEMU_ARGS="$QEMU_ARGS -s -S"
 	fi
 else
 	echo "Debugging: DISABLED"
@@ -82,7 +82,9 @@ echo "Starting ARM QEMU!"
 
 
 QEMU_START_CMD="qemu-system-aarch64 $QEMU_ARGS -M raspi2 -nographic -bios $BINFILE"
-echo "$QEMU_START_CMD"
+echo "Command: $QEMU_START_CMD"
+echo "Press [Ctrl+a h] for help / [Ctrl+a x] to exit to qemu"
+echo ""
 $QEMU_START_CMD
 
 
