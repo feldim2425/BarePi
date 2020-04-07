@@ -14,10 +14,11 @@ extern initf_t __init_array_end;
 extern initf_t __fini_array_start;
 extern initf_t __fini_array_end;
 
-void _exit(int exitcode)
+void __attribute__((noreturn)) _exit(int exitcode) 
 {
-    //asm volatile("dsb");
+    m_data_sync_barrier();
     semihost_exit(ADP_Stopped_ApplicationExit, exitcode);
+
     while (1)
         asm volatile("wfi");
 }

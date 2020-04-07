@@ -1,12 +1,22 @@
-#include <errno.h>
-#include <reent.h>
 #include <barepi/semihost.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <reent.h>
 
-void *_sbrk_r(struct _reent *reent, ptrdiff_t size)
+extern void *_end; /* Defined by the linker */
+
+void *_sbrk_r(struct _reent *reent, ptrdiff_t incr)
 {
-   
-    reent->_errno = ENOMEM;
-    return NULL;
+    static void *heap_end;
+    void *prev_heap_end;
+
+    if (heap_end == 0)
+        heap_end = &_end;
+
+    prev_heap_end = heap_end;
+
+    heap_end += incr;
+    return (caddr_t)prev_heap_end;
 }
 
 _ssize_t _write_r(struct _reent *reent, int fd, const void *buf, size_t nbytes)
