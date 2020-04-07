@@ -7,6 +7,7 @@ SOURCES
     "start.c"
     "semihost.c"
     "multicore.c"
+    "systemcall.c"
 )
 
 if(ARM_TOOLCHAIN_BITNESS EQUAL 64)
