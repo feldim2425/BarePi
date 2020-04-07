@@ -1,6 +1,6 @@
 #! /bin/sh
 
-VERSION=1
+VERSION=2
 PORT=-1
 DEBUGGING=0
 SEMIHOST=0
@@ -81,8 +81,8 @@ echo ""
 echo "Starting ARM QEMU!"
 
 
-QEMU_START_CMD="qemu-system-arm $QEMU_ARGS -M raspi2 -bios $BINFILE"
+QEMU_START_CMD="qemu-system-aarch64 $QEMU_ARGS -M raspi2 -nographic -bios $BINFILE"
 echo "$QEMU_START_CMD"
-$($QEMU_START_CMD)
+$QEMU_START_CMD
 
 
