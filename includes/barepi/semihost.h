@@ -108,11 +108,13 @@ extern "C"
      * If the stdout_stderr extention is supported (bit: 1 / byte:0) the file can be opend with SEMIMODE_APPEND to get stderr
      */
     extern const char SEMIHOST_STDIO_FILE[];
+    extern const size_t SEMIHOST_STDIO_FILELEN;
     /**
      * This constant contains a string (0-terminated char array) that represents feature file
      * in the SEMISYS_OPEN call
      */
     extern const char SEMIHOST_FEATURE_FILE[];
+    extern const size_t SEMIHOST_FEATURE_FILELEN;
 
     /**
      * Call a semihost syscall function. \n
