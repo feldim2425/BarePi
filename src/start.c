@@ -1,4 +1,4 @@
-#include <semihost.h>
+#include <barepi/semihost.h>
 #include <stdlib.h>
 
 typedef void (*initf_t)(void);
@@ -14,7 +14,7 @@ extern initf_t __init_array_end;
 extern initf_t __fini_array_start;
 extern initf_t __fini_array_end;
 
-void exit(int exitcode)
+void _exit(int exitcode)
 {
     //asm volatile("dsb");
     semihost_exit(ADP_Stopped_ApplicationExit, exitcode);
@@ -31,7 +31,7 @@ void _sysinit(uword_t machineId, uword_t atags)
 
     for (it = &__init_array_start; it < &__init_array_end; ++it)
         (**it)();
-
+    
     exit(main());
 }
 

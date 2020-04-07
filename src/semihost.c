@@ -1,8 +1,10 @@
 
-#include <semihost.h>
+#include <barepi/semihost.h>
 
-const char SEMIHOST_STDIO_FILE[] = ":ff";
+const char SEMIHOST_STDIO_FILE[] = ":tt";
+const size_t SEMIHOST_STDIO_FILELEN = sizeof(SEMIHOST_STDIO_FILE);
 const char SEMIHOST_FEATURE_FILE[] = ":semihosting-features";
+const size_t SEMIHOST_FEATURE_FILELEN = sizeof(SEMIHOST_FEATURE_FILE);
 
 semihost_value_t semihost_syscall(semihost_operator_t op, semihost_value_t val)
 {

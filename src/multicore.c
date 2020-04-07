@@ -1,4 +1,4 @@
-#include <archdef.h>
+#include <barepi/archdef.h>
 #include <barepi/multicore.h>
 
 uint8_t get_coreid()
